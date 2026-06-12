@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'features/profile/profile_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'features/auth/auth_gate.dart';
+import 'core/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,12 +24,7 @@ class NutryCoachApp extends StatelessWidget {
     return MaterialApp(
       title: 'NutryCoach',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
-        ),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme(),
       home: const AuthGate(),
     );
   }

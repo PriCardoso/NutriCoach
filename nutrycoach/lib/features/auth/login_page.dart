@@ -8,24 +8,37 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPage> createState() =>
+      _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class _LoginPageState
+    extends State<LoginPage> {
 
-  final _authService = AuthService();
+  final _emailController =
+      TextEditingController();
+
+  final _passwordController =
+      TextEditingController();
+
+  final _authService =
+      AuthService();
 
   bool loading = false;
 
   Future<void> login() async {
+
     try {
-      setState(() => loading = true);
+
+      setState(() {
+        loading = true;
+      });
 
       await _authService.signIn(
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
+        email:
+            _emailController.text.trim(),
+        password:
+            _passwordController.text,
       );
 
       if (!mounted) return;
@@ -33,64 +46,266 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => const DashboardPage(),
+          builder:
+              (_) =>
+                  const DashboardPage(),
         ),
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
+        SnackBar(
+          content:
+              Text(e.toString()),
+        ),
       );
     }
 
-    setState(() => loading = false);
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("NutryCoach"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
+      backgroundColor:
+          const Color(0xFFF5F7FA),
+
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: "E-mail",
+
+            Container(
+              height: 280,
+
+              width: double.infinity,
+
+              decoration:
+                  const BoxDecoration(
+                gradient:
+                    LinearGradient(
+                  colors: [
+                    Color(0xFF22C55E),
+                    Color(0xFF16A34A),
+                  ],
+                ),
               ),
-            ),
 
-            const SizedBox(height: 16),
+              child: Column(
+                mainAxisAlignment:
+                    MainAxisAlignment.center,
 
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: "Senha",
-              ),
-            ),
+                children: [
 
-            const SizedBox(height: 24),
-
-            ElevatedButton(
-              onPressed: loading ? null : login,
-              child: const Text("Entrar"),
-            ),
-
-            const SizedBox(height: 16),
-
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const RegisterPage(),
+                  const Icon(
+                    Icons.spa,
+                    color: Colors.white,
+                    size: 90,
                   ),
-                );
-              },
-              child: const Text("Criar conta"),
+
+                  const SizedBox(
+                    height: 16,
+                  ),
+
+                  const Text(
+                    'NutryCoach',
+                    style: TextStyle(
+                      color:
+                          Colors.white,
+                      fontSize: 34,
+                      fontWeight:
+                          FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 8,
+                  ),
+
+                  const Text(
+                    'Seu nutricionista digital',
+                    style: TextStyle(
+                      color:
+                          Colors.white70,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            Transform.translate(
+              offset:
+                  const Offset(0, -40),
+
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+
+                padding:
+                    const EdgeInsets.all(
+                  24,
+                ),
+
+                decoration:
+                    BoxDecoration(
+                  color: Colors.white,
+
+                  borderRadius:
+                      BorderRadius.circular(
+                    30,
+                  ),
+
+                  boxShadow: [
+
+                    BoxShadow(
+                      color: Colors.black
+                          .withOpacity(
+                        0.08,
+                      ),
+                      blurRadius: 20,
+                    ),
+                  ],
+                ),
+
+                child: Column(
+                  children: [
+
+                    const Text(
+                      'Entrar',
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight:
+                            FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 24,
+                    ),
+
+                    TextField(
+                      controller:
+                          _emailController,
+
+                      decoration:
+                          InputDecoration(
+                        labelText:
+                            'E-mail',
+
+                        prefixIcon:
+                            const Icon(
+                          Icons.email,
+                        ),
+
+                        border:
+                            OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(
+                            16,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 16,
+                    ),
+
+                    TextField(
+                      controller:
+                          _passwordController,
+
+                      obscureText: true,
+
+                      decoration:
+                          InputDecoration(
+                        labelText:
+                            'Senha',
+
+                        prefixIcon:
+                            const Icon(
+                          Icons.lock,
+                        ),
+
+                        border:
+                            OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(
+                            16,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 24,
+                    ),
+
+                    SizedBox(
+                      width:
+                          double.infinity,
+
+                      height: 55,
+
+                      child:
+                          ElevatedButton(
+                        onPressed:
+                            loading
+                                ? null
+                                : login,
+
+                        style:
+                            ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color(
+                            0xFF22C55E,
+                          ),
+
+                          shape:
+                              RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(
+                              16,
+                            ),
+                          ),
+                        ),
+
+                        child: Text(
+                          loading
+                              ? 'Entrando...'
+                              : 'Entrar',
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 16,
+                    ),
+
+                    TextButton(
+                      onPressed: () {
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (_) =>
+                                    const RegisterPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Criar conta',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
